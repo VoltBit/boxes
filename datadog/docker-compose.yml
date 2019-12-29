@@ -1,7 +1,10 @@
 version: '3'
 services:
   datadog:
-    image: datadog/agent:latest
+    # image: datadog/agent:latest
+    build: .
+    ports:
+      - "8125:8125/udp"
     environment:
       - DD_API_KEY=${DD_API_KEY}
     volumes:
