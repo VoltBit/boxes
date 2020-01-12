@@ -11,6 +11,7 @@ services:
       - DB_PASS=
       - DB_NAME=
       - POSTGRES_PASSWORD=${PSQL_BOX_PASS}
+      - POSTGRES_DB=datadb
     # volumes:
     #   - postgres-data:/var/lib/postgresql/data
 
