@@ -1,0 +1,33 @@
+version: "3"
+
+volumes:
+  rabbitmq:
+
+networks:
+  rabbitmq:
+
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # HTTP API, management
+    networks:
+      - "rabbitmq"
+    volumes:
+      - ./config/enabled_plugins:/etc/rabbitmq/enabled_plugins
+    environment:
+      RABBITMQ_USER: admin
+      RABBITMQ_PASSWORD: password
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    networks:
+      - "rabbitmq"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - "rabbitmq"
