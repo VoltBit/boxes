@@ -1,0 +1,17 @@
+version: "3"
+
+volumes:
+  cassandra:
+
+networks:
+  cassandra:
+
+services:
+  cassandra:
+    image: cassandra
+    ports:
+      - "7000:7000"
+    networks:
+      - "cassandra"
+    volumes:
+      - /tmp/cassandra/data/:/var/lib/cassandra
