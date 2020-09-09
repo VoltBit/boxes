@@ -7,11 +7,37 @@ networks:
   cassandra:
 
 services:
-  cassandra:
+  cassandra-seed:
     image: cassandra
+    container_name: cassandra-seed-node
     ports:
       - "7000:7000"
+      - "7199:7199"
+      - "9042:9042"
     networks:
       - "cassandra"
     volumes:
-      - /tmp/cassandra/data/:/var/lib/cassandra
+      - /tmp/cassandra/node0/data/:/var/lib/cassandra
+
+  cassandra-node-1:
+    image: cassandra
+    environment:
+      - "CASSANDRA_SEEDS=cassandra-seed-node"
+    networks:
+      - "cassandra"
+    volumes:
+      - /tmp/cassandra/node1/data/:/var/lib/cassandra
+    depends_on:
+      - "cassandra-seed"
+
+  cassandra-node-2:
+    image: cassandra
+    environment:
+      - "CASSANDRA_SEEDS=cassandra-seed-node"
+    networks:
+      - "cassandra"
+    volumes:
+      - /tmp/cassandra/node2/data/:/var/lib/cassandra
+    depends_on:
+      - "cassandra-node-1"
+
