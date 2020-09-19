@@ -10,13 +10,16 @@ services:
   cassandra-seed:
     image: cassandra
     container_name: cassandra-seed-node
+    deploy:
+      resources:
+        limits:
+          memory: 6Gb
     environment:
       - "JVM_OPTS=-Xms1024M -Xmx1024M"
     ports:
       - "7000:7000"
       - "7199:7199"
       - "9042:9042"
-    mem_limit: 6Gb
     networks:
       - "cassandra"
     volumes:
@@ -24,10 +27,13 @@ services:
 
   cassandra-node-1:
     image: cassandra
+    deploy:
+      resources:
+        limits:
+          memory: 6Gb
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
       - "JVM_OPTS=-Xms1024M -Xmx1024M"
-    mem_limit: 6Gb
     networks:
       - "cassandra"
     volumes:
@@ -37,10 +43,13 @@ services:
 
   cassandra-node-2:
     image: cassandra
+    deploy:
+      resources:
+        limits:
+          memory: 6Gb
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
       - "JVM_OPTS=-Xms1024M -Xmx1024M"
-    mem_limit: 6Gb
     networks:
       - "cassandra"
     volumes:
