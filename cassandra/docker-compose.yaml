@@ -15,7 +15,7 @@ services:
         limits:
           memory: 6Gb
     environment:
-      - "JVM_OPTS=-Xms1024M -Xmx1024M"
+      - "JVM_OPTS=-Xms2048M -Xmx2048M"
     ports:
       - "7000:7000"
       - "7199:7199"
@@ -33,7 +33,7 @@ services:
           memory: 6Gb
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
-      - "JVM_OPTS=-Xms1024M -Xmx1024M"
+      - "JVM_OPTS=-Xms2048M -Xmx2048M"
     networks:
       - "cassandra"
     volumes:
@@ -49,7 +49,7 @@ services:
           memory: 6Gb
     environment:
       - "CASSANDRA_SEEDS=cassandra-seed-node"
-      - "JVM_OPTS=-Xms1024M -Xmx1024M"
+      - "JVM_OPTS=-Xms2048M -Xmx2048M"
     networks:
       - "cassandra"
     volumes:
