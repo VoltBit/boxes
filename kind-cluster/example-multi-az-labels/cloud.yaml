@@ -1,9 +1,76 @@
-# three node (two workers) cluster config
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
 - role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone1"
 - role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone1"
 - role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone1"
 - role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone2"
+- role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone2"
+- role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone2"
+- role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone3"
+- role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone3"
+- role: worker
+  image: kindest/node:v1.15.9
+  kubeadmConfigPatches:
+  - |
+    kind: JoinConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "failure-domain.beta.kubernetes.io=zone3"
