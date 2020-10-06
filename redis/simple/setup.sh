@@ -1,0 +1,37 @@
+node=7000
+count=6
+i=0
+
+echo > pids
+
+echo "Starting Redis..."
+until [ $i -eq $count ]
+do
+  echo $node
+  ((i=i+1))
+  mkdir $node
+  cd $node
+
+  echo "port $node
+cluster-enabled yes
+cluster-config-file nodes.conf
+cluster-node-timeout 5000
+appendonly yes" > redis.conf
+
+  ../../bin/redis-server redis.conf > /dev/null &
+  PID=$!
+  echo $PID >> ../pids
+  cd - > /dev/null
+  ((node=node+1))
+done
+
+sleep 2
+
+echo "Setting up cluster..."
+../bin/redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 --cluster-yes
+
+sleep 1
+
+../bin/redis-cli --cluster add-node 127.0.0.1:7003 127.0.0.1:7000 --cluster-slave
+../bin/redis-cli --cluster add-node 127.0.0.1:7004 127.0.0.1:7000 --cluster-slave
+../bin/redis-cli --cluster add-node 127.0.0.1:7005 127.0.0.1:7000 --cluster-slave
