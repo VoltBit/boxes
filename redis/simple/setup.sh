@@ -2,6 +2,12 @@ node=7000
 count=6
 i=0
 
+if [[ $OSTYPE == "darwin"* ]]; then
+  BINPATH=../bin/darwin
+elif [[ $OSTYPE == "linux-gnu"* ]]; then
+  BINPATH=../bin/linux
+fi
+
 echo > pids
 
 echo "Starting Redis..."
@@ -18,7 +24,7 @@ cluster-config-file nodes.conf
 cluster-node-timeout 5000
 appendonly yes" > redis.conf
 
-  ../../bin/redis-server redis.conf > /dev/null &
+  ../$BINPATH/redis-server redis.conf > /dev/null &
   PID=$!
   echo $PID >> ../pids
   cd - > /dev/null
@@ -28,10 +34,10 @@ done
 sleep 2
 
 echo "Setting up cluster..."
-../bin/redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 --cluster-yes
+$BINPATH/redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 --cluster-yes
 
 sleep 1
 
-../bin/redis-cli --cluster add-node 127.0.0.1:7003 127.0.0.1:7000 --cluster-slave
-../bin/redis-cli --cluster add-node 127.0.0.1:7004 127.0.0.1:7000 --cluster-slave
-../bin/redis-cli --cluster add-node 127.0.0.1:7005 127.0.0.1:7000 --cluster-slave
+$BINPATH/redis-cli --cluster add-node 127.0.0.1:7003 127.0.0.1:7000 --cluster-slave
+$BINPATH/redis-cli --cluster add-node 127.0.0.1:7004 127.0.0.1:7000 --cluster-slave
+$BINPATH/redis-cli --cluster add-node 127.0.0.1:7005 127.0.0.1:7000 --cluster-slave
