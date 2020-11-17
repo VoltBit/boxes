@@ -5,7 +5,7 @@ i=0
 if [[ $OSTYPE == "darwin"* ]]; then
   BINPATH=../bin/darwin
 elif [[ $OSTYPE == "linux-gnu"* ]]; then
-  BINPATH=../bin/linux
+  BINPATH=../bin/linux-gnu
 fi
 
 echo > pids
