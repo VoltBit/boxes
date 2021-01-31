@@ -1,13 +1,11 @@
 from enum import Enum
-from colorama import init, Fore, Style
-init(autoreset=True)
 
 class ClusterParams:
     CONFIG_FILENAME = 'cloud.yaml'
     NODE_LAYOUT = [['eu-central-1a']*3, ['eu-central-1b']*3, ['eu-central-1c']*3]
     ZONE_KEY = 'failure-domain.beta.kubernetes.io/zone'
     KIND_API_VERSION = 'kind.x-k8s.io/v1alpha4'
-    KUBERNETES_VERSION = 'v1.15.12'
+    KUBERNETES_VERSION = 'v1.16.15'
 
 def get_node_count():
     return len([zone for group in ClusterParams.NODE_LAYOUT for zone in group])
@@ -43,7 +41,7 @@ def gen_kind_config():
         for i in range(get_node_count()):
             fh.write('- role: worker')
             fh.write(patches[i])
-    print(Fore.GREEN + ' Done')
+    print('Done')
 
 
 def main():
