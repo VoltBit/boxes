@@ -1,4 +1,4 @@
-GEN_PATH="$(git rev-parse --show-toplevel)/kind-cluster/generator/gen_kind_config.py"
+GEN_PATH="$(git rev-parse --show-toplevel)/kind-boxes/generator/gen_kind_config.py"
 CLUSTER_NAME=$1
 CLUSTER_CONFIG="/tmp/$(date --rfc-3339=date)"
 
