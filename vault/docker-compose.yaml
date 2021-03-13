@@ -1,0 +1,22 @@
+version: '3'
+services:
+  vault:
+    # build: vault.Dockerfile
+    image: vault:1.7.0-rc1
+    container_name: vault
+    depends_on:
+      cassandra:
+        condition: service_healthy
+    ports:
+      - "8200:8200"
+    volumes:
+      - ./config.hcl:/vault/config/config.hcl
+  cassandra:
+    image: cassandra:4.0
+    ports:
+      - "9042:9042"
+    healthcheck:
+      test: ["CMD", "cqlsh", "-u", "cassandra", "-p", "cassandra"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
