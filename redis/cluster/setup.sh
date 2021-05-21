@@ -22,7 +22,11 @@ do
 cluster-enabled yes
 cluster-config-file nodes.conf
 cluster-node-timeout 5000
-appendonly yes" > redis.conf
+appendonly no
+save ""
+aclfile users.acl" > redis.conf
+
+  echo "user default on nopass ~* +@all" > users.acl
 
   ../$BINPATH/redis-server redis.conf > /dev/null &
   PID=$!
